@@ -183,23 +183,27 @@ inline fixed &fixed::operator/=(const float &other)
     return *this;
 }
 
-inline fixed &fixed::operator+=(const int &other)
+inline fixed& fixed::operator+=(const int& other)
 {
+    value += (other << FRAC_BITS);
     return *this;
 }
 
-inline fixed &fixed::operator-=(const int &other)
+inline fixed& fixed::operator-=(const int& other)
 {
+    value -= (other << FRAC_BITS);
     return *this;
 }
 
-inline fixed &fixed::operator*=(const int &other)
+inline fixed& fixed::operator*=(const int& other)
 {
+    value *= other;
     return *this;
 }
 
-inline fixed &fixed::operator/=(const int &other)
+inline fixed& fixed::operator/=(const int& other)
 {
+    value /= other;
     return *this;
 }
 
@@ -338,7 +342,7 @@ inline fixed fixed::absf(const fixed &num)
 
 inline __attribute__((always_inline, hot)) fixed __not_in_flash_func(fixed::sqrt_acc)(const fixed & __restrict__ num)
 {
-    if(num == 0) return num;
+    if(num.value <= 0) return 0;
     int32_t x0 = sqrt(num).value;
     int32_t div = int32_t((int64_t(num.value) << FRAC_BITS) / x0);
     x0  = (x0 + div + 1) >> 1;
