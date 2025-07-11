@@ -67,6 +67,7 @@ class fixed{
 
         static fixed __not_in_flash_func(absf)(const fixed& num);
         static fixed __not_in_flash_func(sign)(const fixed& num);
+        static fixed __not_in_flash_func(logn)(const fixed& num);
         
         static fixed __not_in_flash_func(sqrt_acc)(const fixed& num);
         static fixed __not_in_flash_func(sqrt)(const fixed& num);
@@ -87,6 +88,8 @@ class fixed{
         static const uint16_t __not_in_flash("sqrt_lookup") sqrt_lookup[257];
     #endif
         static const uint16_t __not_in_flash("sin_cos_lookup") sin_cos_lookup[805];
+        static const uint16_t __not_in_flash("log_base_lookup") log_base_lookup[513];
+        static const uint16_t __not_in_flash("log_pow2_lookup") log_pow2_lookup[18];
 };
 
 #include "MyFixedPoint.hpp"
