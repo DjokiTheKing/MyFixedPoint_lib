@@ -348,6 +348,11 @@ inline fixed fixed::absf(const fixed &num)
     return res;
 }
 
+inline fixed fixed::sign (const fixed& num)
+{
+    return num.value >= 0 ? 1.f : -1.f;
+}
+
 inline __attribute__((always_inline, hot)) fixed __not_in_flash_func(fixed::sqrt_acc)(const fixed & __restrict__ num)
 {
     if(num.value <= 0) return 0;
