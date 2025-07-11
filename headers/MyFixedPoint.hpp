@@ -93,24 +93,32 @@ inline fixed fixed::operator/(const float &other) const
 #endif
 }
 
-inline fixed fixed::operator+(const int &other) const
+inline fixed fixed::operator+(const int& other) const
 {
-    return value+(other<<FRAC_BITS);
+    fixed res;
+    res.value = value + (other << FRAC_BITS);
+    return res;
 }
 
-inline fixed fixed::operator-(const int &other) const
+inline fixed fixed::operator-(const int& other) const
 {
-    return value-(other<<FRAC_BITS);
+    fixed res;
+    res.value = value - (other << FRAC_BITS);
+    return res;
 }
 
-inline fixed fixed::operator*(const int &other) const
+inline fixed fixed::operator*(const int& other) const
 {
-    return int32_t((int64_t(value)*int64_t(other<<FRAC_BITS)) >> FRAC_BITS);
+    fixed res;
+    res.value = value*other;
+    return res;
 }
 
-inline fixed fixed::operator/(const int &other) const
+inline fixed fixed::operator/(const int& other) const
 {
-    return int32_t((int64_t(value)<<FRAC_BITS)/int64_t(other<<FRAC_BITS));
+    fixed res;
+    res.value = value / other;
+    return res;
 }
 
 inline fixed &fixed::operator+=(const fixed &other)
