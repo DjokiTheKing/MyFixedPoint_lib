@@ -92,7 +92,7 @@ class fixed{
         static const unsigned FRAC_BITS = 15U;
         static const unsigned FRAC_MASK = 0x00007FFF;
     #ifdef SQRT_BIG_LUT
-        static const uint16_t __not_in_flash("sqrt_lookup") sqrt_lookup[1025];
+        static const uint16_t __not_in_flash("sqrt_lookup") sqrt_lookup[8193];
     #else
         static const uint16_t __not_in_flash("sqrt_lookup") sqrt_lookup[257];
     #endif
