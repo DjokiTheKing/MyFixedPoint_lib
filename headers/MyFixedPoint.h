@@ -70,13 +70,19 @@ class fixed{
 
         static fixed __not_in_flash_func(absf)(const fixed& num);
         static fixed __not_in_flash_func(sign)(const fixed& num);
+
         static fixed __not_in_flash_func(logn)(const fixed& num);
+        static fixed __not_in_flash_func(logn_fast)(const fixed& num);
         
         static fixed __not_in_flash_func(sqrt_acc)(const fixed& num);
         static fixed __not_in_flash_func(sqrt)(const fixed& num);
+        static fixed __not_in_flash_func(sqrt_fast)(const fixed& num);
 
         static fixed __not_in_flash_func(sin)(const fixed& num);
         static fixed __not_in_flash_func(cos)(const fixed& num);
+
+        static fixed __not_in_flash_func(sin_fast)(const fixed& num);
+        static fixed __not_in_flash_func(cos_fast)(const fixed& num);
 
         int32_t value=0;
         static const fixed PI;

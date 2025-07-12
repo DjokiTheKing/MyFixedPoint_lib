@@ -387,6 +387,43 @@ inline fixed fixed::logn(const fixed &num)
     return res;
 }
 
+inline fixed fixed::logn_fast(const fixed &num)
+{  
+    int32_t shz = 17 - __builtin_clz(num.value);
+    int32_t t0;
+    if(shz >= 0){
+        if (shz > 0 && (shz & (shz - 1)) != 0) {
+            shz |= shz >> 1;
+            shz |= shz >> 2;
+            shz |= shz >> 4;
+            shz |= shz >> 8;
+            shz |= shz >> 16;
+            shz++;
+        }
+        int16_t t = (num.value >> (shz + 6));
+        t0 = -(int32_t(fixed::log_base_lookup[t]) << 2);
+        t0 += (log_pow2_lookup[shz] << 4);
+    }else{
+        shz = -shz;
+        if (shz > 0 && (shz & (shz - 1)) != 0) {
+            shz |= shz >> 1;
+            shz |= shz >> 2;
+            shz |= shz >> 4;
+            shz |= shz >> 8;
+            shz |= shz >> 16;
+            shz++;
+            shz>>=1;
+        }
+        int16_t t = (num.value << shz) >> 6;
+        t0 = -(int32_t(fixed::log_base_lookup[t]) << 2);
+        t0 -= (log_pow2_lookup[shz] << 4);
+    }
+
+    fixed res; 
+    res.value = t0; 
+    return res;
+}
+
 inline fixed fixed::absf(const fixed &num)
 {   
     fixed res; res.value = abs(num.value);
@@ -470,6 +507,29 @@ inline __attribute__((always_inline, hot)) fixed __not_in_flash_func(fixed::sqrt
     res.value = t0; 
     return res;
 }
+
+inline __attribute__((always_inline, hot)) fixed __not_in_flash_func(fixed::sqrt_fast)(const fixed & __restrict__ num)
+{
+    if(num.value <= 0) return 0;
+
+    int32_t shz = 17 - __builtin_clz(num.value);
+    int32_t t0;
+    if(shz > 0){ 
+        shz += shz & 1;
+        int16_t t = (num.value >> (shz + 7));
+        t0 = fixed::sqrt_lookup[t];
+        t0 <<= ((shz >> 1) - 1);
+    }else{
+        shz = (-shz) & ~1;
+        int16_t t = (num.value << shz) >> 7;
+        t0 = fixed::sqrt_lookup[t];
+        t0 >>= ((shz >> 1) + 1);
+    }
+
+    fixed res; 
+    res.value = t0; 
+    return res;
+}
 #endif
 const fixed fixed::PI = 3.14159265359f;
 const fixed fixed::HALF_PI = 3.14159265359f/2.f;
@@ -478,6 +538,11 @@ const fixed fixed::TWO_PI = 3.14159265359f*2.f;
 inline fixed fixed::sin(const fixed &num)
 {
     return cos(num-HALF_PI);
+}
+
+inline fixed fixed::sin_fast(const fixed &num)
+{
+    return cos_fast(num-HALF_PI);
 }
 
 inline fixed fixed::cos(const fixed &num)
@@ -499,6 +564,30 @@ inline fixed fixed::cos(const fixed &num)
     int32_t t0 = sin_cos_lookup[index];
     int32_t t1 = sin_cos_lookup[index+1];
     t0 += ((t1-t0)*((angle_in_q1<<9)&0x7FFF)) >> 15;
+    fixed result;
+    if((quadrant == 1 || quadrant == 2)) result.value = -t0;
+    else result.value = t0;
+
+    return result;
+}
+
+inline fixed fixed::cos_fast(const fixed &num)
+{
+    int32_t clamped = num.value % TWO_PI.value;
+    if(clamped < 0) clamped += TWO_PI.value;
+
+    int32_t quadrant = ((clamped << 13) / (HALF_PI.value >> 2))>>15;
+    int32_t angle_in_q1 = 0;
+
+    switch(quadrant) {
+        case 0: angle_in_q1 = clamped; break;
+        case 1: angle_in_q1 = PI.value - clamped; break;
+        case 2: angle_in_q1 = clamped - PI.value; break;
+        case 3: angle_in_q1 = TWO_PI.value - clamped; break;
+    }
+
+    int32_t index = angle_in_q1>>6;
+    int32_t t0 = sin_cos_lookup[index];
     fixed result;
     if((quadrant == 1 || quadrant == 2)) result.value = -t0;
     else result.value = t0;
