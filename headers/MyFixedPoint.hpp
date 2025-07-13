@@ -30,7 +30,7 @@ inline fixed fixed::operator-(const fixed &other) const
 inline fixed fixed::operator*(const fixed &other) const
 {
     fixed res;
-    res.value = int32_t((int64_t(value)*int64_t(other.value)) >> FRAC_BITS);
+    res.value = int32_t((int64_t(value)*int64_t(other.value)+(1LL << (FRAC_BITS - 1))) >> FRAC_BITS);
     return res;
 }
 
@@ -71,11 +71,11 @@ inline fixed fixed::operator*(const float &other) const
 {
 #ifdef PICO_RP2040
     fixed res;
-    res.value = int32_t((int64_t(value)*int64_t(float2fix(other, FRAC_BITS))) >> FRAC_BITS);
+    res.value = int32_t((int64_t(value)*int64_t(float2fix(other, FRAC_BITS))+(1LL << (FRAC_BITS - 1))) >> FRAC_BITS);
     return res;
 #else
     fixed res;
-    res.value = int32_t((int64_t(value)*int64_t(other * float(1L <<FRAC_BITS))) >> FRAC_BITS);
+    res.value = int32_t((int64_t(value)*int64_t(other * float(1L <<FRAC_BITS))+(1LL << (FRAC_BITS - 1))) >> FRAC_BITS);
     return res;
 #endif
 }
@@ -135,7 +135,7 @@ inline fixed &fixed::operator-=(const fixed &other)
 
 inline fixed &fixed::operator*=(const fixed &other)
 {
-    value = int32_t((int64_t(value)*int64_t(other.value)) >> FRAC_BITS);
+    value = int32_t((int64_t(value)*int64_t(other.value)+(1LL << (FRAC_BITS - 1))) >> FRAC_BITS);
     return *this;
 }
 
@@ -170,10 +170,10 @@ inline fixed &fixed::operator-=(const float &other)
 inline fixed &fixed::operator*=(const float &other)
 {
 #ifdef PICO_RP2040
-    value = int32_t((int64_t(value)*float2fix64(other, FRAC_BITS))>>FRAC_BITS);
+    value = int32_t((int64_t(value)*float2fix64(other, FRAC_BITS)+(1LL << (FRAC_BITS - 1)))>>FRAC_BITS);
     return *this;
 #else
-    value = int32_t((int64_t(value)*int64_t(other * float(1L<<FRAC_BITS)))>>FRAC_BITS);
+    value = int32_t((int64_t(value)*int64_t(other * float(1L<<FRAC_BITS))+(1LL << (FRAC_BITS - 1)))>>FRAC_BITS);
     return *this;
 #endif
 }
@@ -361,7 +361,7 @@ inline fixed fixed::logn(const fixed &num)
             ? (num.value >> (shz - 9)) & fixed::FRAC_MASK
             : (num.value << (9 - shz)) & fixed::FRAC_MASK;
         int32_t delta = (-(int32_t(fixed::log_base_lookup[t + 1]) << 2)) - t0;
-        t0 += (delta * interp) >> 15;
+        t0 += (delta * interp+(1LL << (FRAC_BITS - 1))) >> 15;
         t0 += (int32_t(log_pow2_lookup[shz]) << 4);
     }else{
         shz = -shz;
@@ -378,7 +378,7 @@ inline fixed fixed::logn(const fixed &num)
         t0 = -(int32_t(fixed::log_base_lookup[t]) << 2);
         int32_t interp = (num.value << (shz + 9)) & fixed::FRAC_MASK;
         int32_t delta = (-(int32_t(fixed::log_base_lookup[t + 1]) << 2)) - t0;
-        t0 += (delta * interp) >> 15;
+        t0 += (delta * interp+(1LL << (FRAC_BITS - 1))) >> 15;
         t0 -= (int32_t(log_pow2_lookup[shz]) << 4);
     }
 
@@ -460,7 +460,7 @@ inline  fixed __not_in_flash_func(fixed::sqrt)(const fixed &num)
             ? (num.value >> (shz - 13)) & fixed::FRAC_MASK
             : (num.value << (13 - shz)) & fixed::FRAC_MASK;
         int32_t delta = int32_t(fixed::sqrt_lookup[t + 1]) - t0;
-        t0 += (delta * interp) >> 15;
+        t0 += (delta * interp+(1LL << (FRAC_BITS - 1))) >> 15;
         t0 <<= ((shz >> 1) - 1);
     }else{
         shz = (-shz) & ~1;
@@ -468,7 +468,7 @@ inline  fixed __not_in_flash_func(fixed::sqrt)(const fixed &num)
         t0 = int32_t(fixed::sqrt_lookup[t]);
         int32_t interp = (num.value << (shz + 13)) & fixed::FRAC_MASK;
         int32_t delta = int32_t(fixed::sqrt_lookup[t + 1]) - t0;
-        t0 += (delta * interp) >> 15;
+        t0 += (delta * interp+(1LL << (FRAC_BITS - 1))) >> 15;
         t0 >>= ((shz >> 1) + 1);
     }
 
@@ -513,7 +513,7 @@ inline  fixed __not_in_flash_func(fixed::sqrt)(const fixed &  num)
             ? (num.value >> (shz - 8)) & fixed::FRAC_MASK
             : (num.value << (8 - shz)) & fixed::FRAC_MASK;
         int32_t delta = int32_t(fixed::sqrt_lookup[t + 1]) - t0;
-        t0 += (delta * interp) >> 15;
+        t0 += (delta * interp+(1LL << (FRAC_BITS - 1))) >> 15;
         t0 <<= ((shz >> 1) - 1);
     }else{ 
         shz = (-shz) & ~1;
@@ -521,7 +521,7 @@ inline  fixed __not_in_flash_func(fixed::sqrt)(const fixed &  num)
         t0 = int32_t(fixed::sqrt_lookup[t]);
         int32_t interp = (num.value << (shz + 8)) & fixed::FRAC_MASK;
         int32_t delta = int32_t(fixed::sqrt_lookup[t + 1]) - t0;
-        t0 += (delta * interp) >> 15;
+        t0 += (delta * interp+(1LL << (FRAC_BITS - 1))) >> 15;
         t0 >>= ((shz >> 1) + 1);
     }
 
@@ -585,7 +585,7 @@ inline fixed fixed::cos(const fixed &num)
     int32_t index = angle_in_q1>>6;
     int32_t t0 = int32_t(fixed::sin_cos_lookup[index]);
     int32_t t1 = int32_t(fixed::sin_cos_lookup[index+1]);
-    t0 += ((t1-t0)*((angle_in_q1<<9)&fixed::FRAC_MASK)) >> 15;
+    t0 += ((t1-t0)*((angle_in_q1<<9)&fixed::FRAC_MASK)+(1LL << (FRAC_BITS - 1))) >> 15;
     fixed result;
     if((quadrant == 1 || quadrant == 2)) result.value = -t0;
     else result.value = t0;
