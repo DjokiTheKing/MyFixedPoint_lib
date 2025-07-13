@@ -12,6 +12,10 @@ fixed::fixed(float val)
 #endif
 }
 
+inline fixed::fixed(int val)
+{
+    value = val << 15;
+}
 
 inline fixed fixed::operator+(const fixed &other) const
 {
@@ -340,6 +344,11 @@ inline fixed::operator float() const
 #else
     return float(value)/float(1L<<FRAC_BITS);
 #endif
+}
+
+inline fixed::operator int() const
+{
+    return value >> 15;
 }
 
 inline fixed fixed::logn(const fixed &num)

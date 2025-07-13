@@ -11,6 +11,7 @@ class fixed{
     public:
         fixed() = default;
         fixed(float);
+        fixed(int);
 
         fixed __not_in_flash_func(operator+)(const fixed& other) const;
         fixed __not_in_flash_func(operator-)(const fixed& other) const;
@@ -67,6 +68,7 @@ class fixed{
         bool __not_in_flash_func(operator<=)(const int& other) const;
 
         operator float() const;
+        operator int() const;
 
         static fixed __not_in_flash_func(absf)(const fixed& num);
         static fixed __not_in_flash_func(sign)(const fixed& num);
