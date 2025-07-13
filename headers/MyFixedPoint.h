@@ -1,7 +1,7 @@
 #ifndef MY_FIXED_POINT_H
 #define MY_FIXED_POINT_H
 
-#define MAX_FIXED_VALUE fixed(65535.998f)
+#define MAX_FIXED_VALUE fixed(65535.99997f)
 #define MIN_FIXED_VALUE fixed(-65536.0f)
 
 #include "pico/float.h"
