@@ -435,7 +435,7 @@ inline fixed fixed::sign (const fixed& num)
     return num.value >= 0 ? 1.f : -1.f;
 }
 
-inline __attribute__((always_inline, hot)) fixed __not_in_flash_func(fixed::sqrt_acc)(const fixed & __restrict__ num)
+inline  fixed __not_in_flash_func(fixed::sqrt_acc)(const fixed &  num)
 {
     if(num.value <= 0) return 0;
     int32_t x0 = sqrt(num).value;
@@ -446,7 +446,7 @@ inline __attribute__((always_inline, hot)) fixed __not_in_flash_func(fixed::sqrt
     return result;
 }
 #ifdef SQRT_BIG_LUT
-inline __attribute__((always_inline, hot)) fixed __not_in_flash_func(fixed::sqrt)(const fixed &num)
+inline  fixed __not_in_flash_func(fixed::sqrt)(const fixed &num)
 {
     if(num.value <= 0) return 0;
 
@@ -476,7 +476,7 @@ inline __attribute__((always_inline, hot)) fixed __not_in_flash_func(fixed::sqrt
     res.value = t0; 
     return res;
 }
-inline __attribute__((always_inline, hot)) fixed __not_in_flash_func(fixed::sqrt_fast)(const fixed &num)
+inline  fixed __not_in_flash_func(fixed::sqrt_fast)(const fixed &num)
 {
     if(num.value <= 0) return 0;
 
@@ -499,7 +499,7 @@ inline __attribute__((always_inline, hot)) fixed __not_in_flash_func(fixed::sqrt
     return res;
 }
 #else
-inline __attribute__((always_inline, hot)) fixed __not_in_flash_func(fixed::sqrt)(const fixed & __restrict__ num)
+inline  fixed __not_in_flash_func(fixed::sqrt)(const fixed &  num)
 {
     if(num.value <= 0) return 0;
 
@@ -530,7 +530,7 @@ inline __attribute__((always_inline, hot)) fixed __not_in_flash_func(fixed::sqrt
     return res;
 }
 
-inline __attribute__((always_inline, hot)) fixed __not_in_flash_func(fixed::sqrt_fast)(const fixed & __restrict__ num)
+inline  fixed __not_in_flash_func(fixed::sqrt_fast)(const fixed &  num)
 {
     if(num.value <= 0) return 0;
 
