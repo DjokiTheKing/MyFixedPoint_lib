@@ -360,9 +360,9 @@ inline fixed fixed::logn(const fixed &num)
         int32_t interp = (shz >= 9)
             ? (num.value >> (shz - 9)) & 0x7FFF
             : (num.value << (9 - shz)) & 0x7FFF;
-        int32_t delta = (-(fixed::log_base_lookup[t + 1] << 2)) - t0;
+        int32_t delta = (-(int32_t(fixed::log_base_lookup[t + 1]) << 2)) - t0;
         t0 += (delta * interp) >> 15;
-        t0 += (log_pow2_lookup[shz] << 4);
+        t0 += (int32_t(log_pow2_lookup[shz]) << 4);
     }else{
         shz = -shz;
         if (shz > 0 && (shz & (shz - 1)) != 0) {
@@ -377,9 +377,9 @@ inline fixed fixed::logn(const fixed &num)
         int16_t t = (num.value << shz) >> 6;
         t0 = -(int32_t(fixed::log_base_lookup[t]) << 2);
         int32_t interp = (num.value << (shz + 9)) & 0x7FFF;
-        int32_t delta = (-(fixed::log_base_lookup[t + 1] << 2)) - t0;
+        int32_t delta = (-(int32_t(fixed::log_base_lookup[t + 1]) << 2)) - t0;
         t0 += (delta * interp) >> 15;
-        t0 -= (log_pow2_lookup[shz] << 4);
+        t0 -= (int32_t(log_pow2_lookup[shz]) << 4);
     }
 
     fixed res; 
@@ -402,7 +402,7 @@ inline fixed fixed::logn_fast(const fixed &num)
         }
         int16_t t = (num.value >> (shz + 6));
         t0 = -(int32_t(fixed::log_base_lookup[t]) << 2);
-        t0 += (log_pow2_lookup[shz] << 4);
+        t0 += (int32_t(log_pow2_lookup[shz]) << 4);
     }else{
         shz = -shz;
         if (shz > 0 && (shz & (shz - 1)) != 0) {
@@ -416,7 +416,7 @@ inline fixed fixed::logn_fast(const fixed &num)
         }
         int16_t t = (num.value << shz) >> 6;
         t0 = -(int32_t(fixed::log_base_lookup[t]) << 2);
-        t0 -= (log_pow2_lookup[shz] << 4);
+        t0 -= (int32_t(log_pow2_lookup[shz]) << 4);
     }
 
     fixed res; 
@@ -455,19 +455,19 @@ inline  fixed __not_in_flash_func(fixed::sqrt)(const fixed &num)
     if(shz > 0){ 
         shz += shz & 1;
         int16_t t = (num.value >> (shz + 2));
-        t0 = fixed::sqrt_lookup[t];
-        int16_t interp = (shz >= 13)
+        t0 = int32_t(fixed::sqrt_lookup[t]);
+        int32_t interp = (shz >= 13)
             ? (num.value >> (shz - 13)) & 0x7FFF
             : (num.value << (13 - shz)) & 0x7FFF;
-        int16_t delta = fixed::sqrt_lookup[t + 1] - t0;
+        int32_t delta = int32_t(fixed::sqrt_lookup[t + 1]) - t0;
         t0 += (delta * interp) >> 15;
         t0 <<= ((shz >> 1) - 1);
     }else{
         shz = (-shz) & ~1;
         int16_t t = (num.value << shz) >> 2;
-        t0 = fixed::sqrt_lookup[t];
-        int16_t interp = (num.value << (shz + 13)) & 0x7FFF;
-        int16_t delta = fixed::sqrt_lookup[t + 1] - t0;
+        t0 = int32_t(fixed::sqrt_lookup[t]);
+        int32_t interp = (num.value << (shz + 13)) & 0x7FFF;
+        int32_t delta = int32_t(fixed::sqrt_lookup[t + 1]) - t0;
         t0 += (delta * interp) >> 15;
         t0 >>= ((shz >> 1) + 1);
     }
@@ -485,12 +485,12 @@ inline  fixed __not_in_flash_func(fixed::sqrt_fast)(const fixed &num)
     if(shz > 0){ 
         shz += shz & 1;
         int16_t t = (num.value >> (shz + 2));
-        t0 = fixed::sqrt_lookup[t];
+        t0 = int32_t(fixed::sqrt_lookup[t]);
         t0 <<= ((shz >> 1) - 1);
     }else{
         shz = (-shz) & ~1;
         int16_t t = (num.value << shz) >> 2;
-        t0 = fixed::sqrt_lookup[t];
+        t0 = int32_t(fixed::sqrt_lookup[t]);
         t0 >>= ((shz >> 1) + 1);
     }
 
@@ -508,19 +508,19 @@ inline  fixed __not_in_flash_func(fixed::sqrt)(const fixed &  num)
     if(shz > 0){ 
         shz += shz & 1;
         int16_t t = (num.value >> (shz + 7));
-        t0 = fixed::sqrt_lookup[t];
-        int16_t interp = (shz >= 8)
+        t0 = int32_t(fixed::sqrt_lookup[t]);
+        int32_t interp = (shz >= 8)
             ? (num.value >> (shz - 8)) & 0x7FFF
             : (num.value << (8 - shz)) & 0x7FFF;
-        int16_t delta = fixed::sqrt_lookup[t + 1] - t0;
+        int32_t delta = int32_t(fixed::sqrt_lookup[t + 1]) - t0;
         t0 += (delta * interp) >> 15;
         t0 <<= ((shz >> 1) - 1);
     }else{
         shz = (-shz) & ~1;
         int16_t t = (num.value << shz) >> 7;
-        t0 = fixed::sqrt_lookup[t];
-        int16_t interp = (num.value << (shz + 8)) & 0x7FFF;
-        int16_t delta = fixed::sqrt_lookup[t + 1] - t0;
+        t0 = int32_t(fixed::sqrt_lookup[t]);
+        int32_t interp = (num.value << (shz + 8)) & 0x7FFF;
+        int32_t delta = int32_t(fixed::sqrt_lookup[t + 1]) - t0;
         t0 += (delta * interp) >> 15;
         t0 >>= ((shz >> 1) + 1);
     }
@@ -539,12 +539,12 @@ inline  fixed __not_in_flash_func(fixed::sqrt_fast)(const fixed &  num)
     if(shz > 0){ 
         shz += shz & 1;
         int16_t t = (num.value >> (shz + 7));
-        t0 = fixed::sqrt_lookup[t];
+        t0 = int32_t(fixed::sqrt_lookup[t]);
         t0 <<= ((shz >> 1) - 1);
     }else{
         shz = (-shz) & ~1;
         int16_t t = (num.value << shz) >> 7;
-        t0 = fixed::sqrt_lookup[t];
+        t0 = int32_t(fixed::sqrt_lookup[t]);
         t0 >>= ((shz >> 1) + 1);
     }
 
@@ -583,8 +583,8 @@ inline fixed fixed::cos(const fixed &num)
     }
 
     int32_t index = angle_in_q1>>6;
-    int32_t t0 = sin_cos_lookup[index];
-    int32_t t1 = sin_cos_lookup[index+1];
+    int32_t t0 = int32_t(sin_cos_lookup[index]);
+    int32_t t1 = int32_t(sin_cos_lookup[index+1]);
     t0 += ((t1-t0)*((angle_in_q1<<9)&0x7FFF)) >> 15;
     fixed result;
     if((quadrant == 1 || quadrant == 2)) result.value = -t0;
@@ -609,7 +609,7 @@ inline fixed fixed::cos_fast(const fixed &num)
     }
 
     int32_t index = angle_in_q1>>6;
-    int32_t t0 = sin_cos_lookup[index];
+    int32_t t0 = int32_t(sin_cos_lookup[index]);
     fixed result;
     if((quadrant == 1 || quadrant == 2)) result.value = -t0;
     else result.value = t0;
