@@ -8814,7 +8814,7 @@ const uint16_t __not_in_flash("sqrt_lookup") fixed::sqrt_lookup[8193] = {
     65535
 };
 #else
-alignas(32) const uint16_t __not_in_flash("sqrt_lookup") fixed::sqrt_lookup[257] = {
+const uint16_t __not_in_flash("sqrt_lookup") fixed::sqrt_lookup[257] = {
     0,
     4096,
     5792,
