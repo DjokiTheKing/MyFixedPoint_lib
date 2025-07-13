@@ -337,6 +337,25 @@ inline bool fixed::operator<=(const int &other) const
     return value <= (other<<FRAC_BITS);
 }
 
+inline fixed& fixed::operator++(){
+    ++value;
+    return *this;
+}
+inline fixed& fixed::operator--(){
+    --value;
+    return *this;
+}
+inline fixed  fixed::operator++(int){
+    fixed res; res.value = value;
+    ++value;
+    return res;
+}
+inline fixed  fixed::operator--(int){
+    fixed res; res.value = value;
+    --value;
+    return res;
+}
+
 inline fixed::operator float() const
 {
 #ifdef PICO_RP2040
