@@ -184,7 +184,7 @@ inline fixed &fixed::operator/=(const float &other)
     value = int32_t((int64_t(value)<<FRAC_BITS)/float2fix64(other, FRAC_BITS));
     return *this;
 #else
-    value += int32_t((int64_t(value)<<FRAC_BITS)/int64_t(other * float(1L<<FRAC_BITS)));
+    value = int32_t((int64_t(value)<<FRAC_BITS)/int64_t(other * float(1L<<FRAC_BITS)));
     return *this;
 #endif
     
