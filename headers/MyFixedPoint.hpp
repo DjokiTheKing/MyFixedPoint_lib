@@ -361,7 +361,7 @@ inline fixed::operator float() const
 #ifdef PICO_RP2040
     return fix2float(value, FRAC_BITS);
 #else
-    return float(value)/float(1L<<FRAC_BITS)+0.5f;
+    return float(value)/float(1L<<FRAC_BITS);
 #endif
 }
 
