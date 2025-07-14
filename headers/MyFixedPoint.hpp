@@ -389,7 +389,7 @@ inline fixed fixed::logn(const fixed &num)
             ? (num.value >> (shz - 9)) & fixed::FRAC_MASK
             : (num.value << (9 - shz)) & fixed::FRAC_MASK;
         int32_t delta = (-(int32_t(fixed::log_base_lookup[t + 1]) << 2)) - t0;
-        t0 += (delta * interp+(1LL << (FRAC_BITS - 1))) >> FRAC_BITS;
+        t0 += (delta * interp+(1L << (FRAC_BITS - 1))) >> FRAC_BITS;
         t0 += (int32_t(log_pow2_lookup[shz]) << 4);
     }else{
         shz = -shz;
@@ -406,7 +406,7 @@ inline fixed fixed::logn(const fixed &num)
         t0 = -(int32_t(fixed::log_base_lookup[t]) << 2);
         int32_t interp = (num.value << (shz + 9)) & fixed::FRAC_MASK;
         int32_t delta = (-(int32_t(fixed::log_base_lookup[t + 1]) << 2)) - t0;
-        t0 += (delta * interp+(1LL << (FRAC_BITS - 1))) >> FRAC_BITS;
+        t0 += (delta * interp+(1L << (FRAC_BITS - 1))) >> FRAC_BITS;
         t0 -= (int32_t(log_pow2_lookup[shz]) << 4);
     }
 
@@ -458,9 +458,9 @@ inline fixed fixed::absf(const fixed &num)
     return res;
 }
 
-inline fixed fixed::sign (const fixed& num)
+inline fixed fixed::sign(const fixed& num)
 {
-    return num.value >= 0 ? 1.f : -1.f;
+    return num.value >= 0 ? 1 : -1;
 }
 
 inline  fixed __not_in_flash_func(fixed::sqrt_acc)(const fixed &  num)
@@ -488,7 +488,7 @@ inline  fixed __not_in_flash_func(fixed::sqrt)(const fixed &num)
             ? (num.value >> (shz - 13)) & fixed::FRAC_MASK
             : (num.value << (13 - shz)) & fixed::FRAC_MASK;
         int32_t delta = int32_t(fixed::sqrt_lookup[t + 1]) - t0;
-        t0 += (delta * interp+(1LL << (FRAC_BITS - 1))) >> FRAC_BITS;
+        t0 += (delta * interp+(1L << (FRAC_BITS - 1))) >> FRAC_BITS;
         t0 <<= ((shz >> 1) - 1);
     }else{
         shz = (-shz) & ~1;
@@ -496,7 +496,7 @@ inline  fixed __not_in_flash_func(fixed::sqrt)(const fixed &num)
         t0 = int32_t(fixed::sqrt_lookup[t]);
         int32_t interp = (num.value << (shz + 13)) & fixed::FRAC_MASK;
         int32_t delta = int32_t(fixed::sqrt_lookup[t + 1]) - t0;
-        t0 += (delta * interp+(1LL << (FRAC_BITS - 1))) >> FRAC_BITS;
+        t0 += (delta * interp+(1L << (FRAC_BITS - 1))) >> FRAC_BITS;
         t0 >>= ((shz >> 1) + 1);
     }
 
@@ -541,7 +541,7 @@ inline  fixed __not_in_flash_func(fixed::sqrt)(const fixed &  num)
             ? (num.value >> (shz - 8)) & fixed::FRAC_MASK
             : (num.value << (8 - shz)) & fixed::FRAC_MASK;
         int32_t delta = int32_t(fixed::sqrt_lookup[t + 1]) - t0;
-        t0 += (delta * interp+(1LL << (FRAC_BITS - 1))) >> FRAC_BITS;
+        t0 += (delta * interp+(1L << (FRAC_BITS - 1))) >> FRAC_BITS;
         t0 <<= ((shz >> 1) - 1);
     }else{ 
         shz = (-shz) & ~1;
@@ -549,7 +549,7 @@ inline  fixed __not_in_flash_func(fixed::sqrt)(const fixed &  num)
         t0 = int32_t(fixed::sqrt_lookup[t]);
         int32_t interp = (num.value << (shz + 8)) & fixed::FRAC_MASK;
         int32_t delta = int32_t(fixed::sqrt_lookup[t + 1]) - t0;
-        t0 += (delta * interp+(1LL << (FRAC_BITS - 1))) >> FRAC_BITS;
+        t0 += (delta * interp+(1L << (FRAC_BITS - 1))) >> FRAC_BITS;
         t0 >>= ((shz >> 1) + 1);
     }
 
@@ -581,9 +581,9 @@ inline  fixed __not_in_flash_func(fixed::sqrt_fast)(const fixed &  num)
     return res;
 }
 #endif
-const fixed fixed::PI = 3.14159265359f;
-const fixed fixed::HALF_PI = 3.14159265359f/2.f;
-const fixed fixed::TWO_PI = 3.14159265359f*2.f;
+const fixed fixed::PI =      3.14159265359f;
+const fixed fixed::HALF_PI = 1.57079632679f;
+const fixed fixed::TWO_PI =  6.28318530717f;
 
 inline fixed fixed::sin(const fixed &num)
 {
@@ -613,7 +613,7 @@ inline fixed fixed::cos(const fixed &num)
     int32_t index = angle_in_q1>>6;
     int32_t t0 = int32_t(fixed::sin_cos_lookup[index]);
     int32_t t1 = int32_t(fixed::sin_cos_lookup[index+1]);
-    t0 += ((t1-t0)*((angle_in_q1<<9)&fixed::FRAC_MASK)+(1LL << (FRAC_BITS - 1))) >> FRAC_BITS;
+    t0 += ((t1-t0)*((angle_in_q1<<9)&fixed::FRAC_MASK)+(1L << (FRAC_BITS - 1))) >> FRAC_BITS;
     fixed result;
     if((quadrant == 1 || quadrant == 2)) result.value = -t0;
     else result.value = t0;

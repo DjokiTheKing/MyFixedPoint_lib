@@ -96,8 +96,8 @@ class fixed{
         static const fixed HALF_PI;
         static const fixed TWO_PI;
     private:
-        static const unsigned FRAC_BITS = 15U;
-        static const unsigned FRAC_MASK = 0x00007FFF;
+        static const int32_t FRAC_BITS = 15;
+        static const int32_t FRAC_MASK = 0x7FFF;
     #ifdef SQRT_BIG_LUT
         static const uint16_t __not_in_flash("sqrt_lookup") sqrt_lookup[8193];
     #else
