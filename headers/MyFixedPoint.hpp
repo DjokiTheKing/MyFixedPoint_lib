@@ -372,32 +372,32 @@ inline fixed::operator float() const
 
 inline fixed::operator int() const
 {
-    return value >> FRAC_BITS;
+    return (value+(1<<(FRAC_BITS-1))) >> FRAC_BITS;
 }
 
 inline fixed::operator short() const
 {
-    return short(value >> FRAC_BITS);
+    return short((value+(1<<(FRAC_BITS-1))) >> FRAC_BITS);
 }
 
 inline fixed::operator char() const
 {
-    return char(value >> FRAC_BITS);
+    return char((value+(1<<(FRAC_BITS-1))) >> FRAC_BITS);
 }
 
 inline fixed::operator unsigned int() const
 {
-    return (unsigned(value >> FRAC_BITS));
+    return (unsigned((value+(1<<(FRAC_BITS-1))) >> FRAC_BITS));
 }
 
 inline fixed::operator unsigned short() const
 {
-    return ((unsigned short)(value >> FRAC_BITS));
+    return ((unsigned short)((value+(1<<(FRAC_BITS-1))) >> FRAC_BITS));
 }
 
 inline fixed::operator unsigned char() const
 {
-    return ((unsigned char)(value >> FRAC_BITS));
+    return ((unsigned char)((value+(1<<(FRAC_BITS-1))) >> FRAC_BITS));
 }
 
 inline fixed fixed::logn(const fixed &num)
