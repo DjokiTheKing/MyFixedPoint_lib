@@ -1,11 +1,33 @@
 #ifndef MY_FIXED_POINT_H
 #define MY_FIXED_POINT_H
 
-#define MAX_FIXED_VALUE fixed(65535.99997f)
-#define MIN_FIXED_VALUE fixed(-65536.0f)
+#include <cstdint>
+#include <cmath>
 
-#include "pico/float.h"
-#include <cstring>
+#define MAX_FIXED_VALUE fixed::from_raw_fixed(2147483647)
+#define MIN_FIXED_VALUE fixed::from_raw_fixed(-2147483648)
+
+#ifdef PICO_RP2040
+    #include "pico/float.h"
+#endif
+
+#ifndef __not_in_flash_func
+    #define __not_in_flash_func(x) x
+#endif
+
+#ifndef __not_in_flash
+    #define __not_in_flash(x)
+#endif
+
+#if defined(_MSC_VER)
+
+static inline int __builtin_clz(uint32_t num) {
+	unsigned long index;
+	if (_BitScanReverse(&index, num)) return 31 - index;
+	else return 32;
+}
+
+#endif
 
 class fixed{
     public:
@@ -72,8 +94,16 @@ class fixed{
         fixed operator++(int);
         fixed operator--(int);
 
+        fixed operator-() const;
+
         operator float() const;
         operator int() const;
+        operator short() const;
+        operator char() const;
+
+        operator unsigned int() const;
+        operator unsigned short() const;
+        operator unsigned char() const;
 
         static fixed __not_in_flash_func(absf)(const fixed& num);
         static fixed __not_in_flash_func(sign)(const fixed& num);
@@ -91,6 +121,8 @@ class fixed{
         static fixed __not_in_flash_func(sin_fast)(const fixed& num);
         static fixed __not_in_flash_func(cos_fast)(const fixed& num);
 
+        static fixed __not_in_flash_func(from_raw_fixed)(const int32_t& num);
+
         int32_t value=0;
         static const fixed PI;
         static const fixed HALF_PI;
@@ -103,7 +135,7 @@ class fixed{
     #else
         static const uint16_t __not_in_flash("sqrt_lookup") sqrt_lookup[257];
     #endif
-        static const uint16_t __not_in_flash("sin_cos_lookup") sin_cos_lookup[805];
+        static const uint16_t __not_in_flash("sin_cos_lookup") sin_cos_lookup[806];
         static const uint16_t __not_in_flash("log_base_lookup") log_base_lookup[513];
         static const uint16_t __not_in_flash("log_pow2_lookup") log_pow2_lookup[18];
 };

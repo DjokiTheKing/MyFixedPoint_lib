@@ -356,6 +356,11 @@ inline fixed  fixed::operator--(int){
     return res;
 }
 
+inline fixed fixed::operator-() const{
+    fixed res; res.value = -value;
+    return res;
+}
+
 inline fixed::operator float() const
 {
 #ifdef PICO_RP2040
@@ -368,6 +373,31 @@ inline fixed::operator float() const
 inline fixed::operator int() const
 {
     return value >> FRAC_BITS;
+}
+
+inline fixed::operator short() const
+{
+    return short(value >> FRAC_BITS);
+}
+
+inline fixed::operator char() const
+{
+    return char(value >> FRAC_BITS);
+}
+
+inline fixed::operator unsigned int() const
+{
+    return (unsigned(value >> FRAC_BITS));
+}
+
+inline fixed::operator unsigned short() const
+{
+    return ((unsigned short)(value >> FRAC_BITS));
+}
+
+inline fixed::operator unsigned char() const
+{
+    return ((unsigned char)(value >> FRAC_BITS));
 }
 
 inline fixed fixed::logn(const fixed &num)
@@ -609,7 +639,7 @@ inline fixed fixed::cos(const fixed &num)
         case 2: angle_in_q1 = clamped - PI.value; break;
         case 3: angle_in_q1 = TWO_PI.value - clamped; break;
     }
-
+    
     int32_t index = angle_in_q1>>6;
     int32_t t0 = int32_t(fixed::sin_cos_lookup[index]);
     int32_t t1 = int32_t(fixed::sin_cos_lookup[index+1]);
@@ -644,6 +674,14 @@ inline fixed fixed::cos_fast(const fixed &num)
 
     return result;
 }
+
+
+inline fixed fixed::from_raw_fixed(const int32_t &num)
+{   
+    fixed res; res.value = num;
+    return res;
+}
+
 
 #ifdef SQRT_BIG_LUT
 const uint16_t __not_in_flash("sqrt_lookup") fixed::sqrt_lookup[8193] = {
@@ -9102,7 +9140,7 @@ const uint16_t __not_in_flash("sqrt_lookup") fixed::sqrt_lookup[257] = {
     65535
 };
 #endif
-const uint16_t __not_in_flash("sin_cos_lookup") fixed::sin_cos_lookup[805] = {
+const uint16_t __not_in_flash("sin_cos_lookup") fixed::sin_cos_lookup[806] = {
     32768,
     32767,
     32767,
@@ -9907,6 +9945,7 @@ const uint16_t __not_in_flash("sin_cos_lookup") fixed::sin_cos_lookup[805] = {
     192,
     128,
     64,
+    0,
     0
 };
 
