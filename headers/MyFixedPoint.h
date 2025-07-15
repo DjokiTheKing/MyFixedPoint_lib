@@ -29,6 +29,11 @@ static inline int __builtin_clz(uint32_t num) {
 
 #endif
 
+/*
+    TODO:
+        IMPLEMENT ALL OF THE UNSIGNED ONES
+*/
+
 class fixed{
     public:
         fixed() = default;
@@ -61,6 +66,12 @@ class fixed{
         fixed __not_in_flash_func(operator*)(const int& other) const;
         fixed __not_in_flash_func(operator/)(const int& other) const;
 
+        // UNSIGNED
+        fixed __not_in_flash_func(operator+)(const unsigned& other) const;
+        fixed __not_in_flash_func(operator-)(const unsigned& other) const;
+        fixed __not_in_flash_func(operator*)(const unsigned& other) const;
+        fixed __not_in_flash_func(operator/)(const unsigned& other) const;
+
         // BASIC + ASSIGN OPS
 
         // FIXED
@@ -87,42 +98,55 @@ class fixed{
         fixed& __not_in_flash_func(operator*=)(const int& other);
         fixed& __not_in_flash_func(operator/=)(const int& other);
 
+        // INT
+        fixed& __not_in_flash_func(operator+=)(const unsigned& other);
+        fixed& __not_in_flash_func(operator-=)(const unsigned& other);
+        fixed& __not_in_flash_func(operator*=)(const unsigned& other);
+        fixed& __not_in_flash_func(operator/=)(const unsigned& other);
+
         // ASSIGNMENT OPS
         fixed& __not_in_flash_func(operator=)(const fixed& other);
         fixed& __not_in_flash_func(operator=)(const double& other);
         fixed& __not_in_flash_func(operator=)(const float& other);
         fixed& __not_in_flash_func(operator=)(const int& other);
+        fixed& __not_in_flash_func(operator=)(const unsigned& other);
 
         // COMPARISON OPS
         bool __not_in_flash_func(operator>)(const fixed& other) const;
         bool __not_in_flash_func(operator>)(const double& other) const;
         bool __not_in_flash_func(operator>)(const float& other) const;
         bool __not_in_flash_func(operator>)(const int& other) const;
+        bool __not_in_flash_func(operator>)(const unsigned& other) const;
 
         bool __not_in_flash_func(operator<)(const fixed& other) const;
         bool __not_in_flash_func(operator<)(const double& other) const;
         bool __not_in_flash_func(operator<)(const float& other) const;
         bool __not_in_flash_func(operator<)(const int& other) const;
+        bool __not_in_flash_func(operator<)(const unsigned& other) const;
 
         bool __not_in_flash_func(operator==)(const fixed& other) const;
         bool __not_in_flash_func(operator==)(const double& other) const;
         bool __not_in_flash_func(operator==)(const float& other) const;
         bool __not_in_flash_func(operator==)(const int& other) const;
+        bool __not_in_flash_func(operator==)(const unsigned& other) const;
 
         bool __not_in_flash_func(operator>=)(const fixed& other) const;
         bool __not_in_flash_func(operator>=)(const double& other) const;
         bool __not_in_flash_func(operator>=)(const float& other) const;
         bool __not_in_flash_func(operator>=)(const int& other) const;
+        bool __not_in_flash_func(operator>=)(const unsigned& other) const;
 
         bool __not_in_flash_func(operator<=)(const fixed& other) const;
         bool __not_in_flash_func(operator<=)(const double& other) const;
         bool __not_in_flash_func(operator<=)(const float& other) const;
         bool __not_in_flash_func(operator<=)(const int& other) const;
+        bool __not_in_flash_func(operator<=)(const unsigned& other) const;
 
         fixed __not_in_flash_func(operator%)(const fixed& other) const;
         fixed __not_in_flash_func(operator%)(const double& other) const;
         fixed __not_in_flash_func(operator%)(const float& other) const;
         fixed __not_in_flash_func(operator%)(const int& other) const;
+        fixed __not_in_flash_func(operator%)(const unsigned& other) const;
 
         fixed& operator++();
         fixed& operator--();
@@ -179,35 +203,43 @@ class fixed{
 fixed __not_in_flash_func(operator*)(double lhs, const fixed& rhs);
 fixed __not_in_flash_func(operator*)(float lhs, const fixed& rhs);
 fixed __not_in_flash_func(operator*)(int lhs, const fixed& rhs);
+fixed __not_in_flash_func(operator*)(unsigned lhs, const fixed& rhs);
 
 fixed __not_in_flash_func(operator/)(double lhs, const fixed& rhs);
 fixed __not_in_flash_func(operator/)(float lhs, const fixed& rhs);
 fixed __not_in_flash_func(operator/)(int lhs, const fixed& rhs);
+fixed __not_in_flash_func(operator/)(unsigned lhs, const fixed& rhs);
 
 fixed __not_in_flash_func(operator+)(double lhs, const fixed& rhs);
 fixed __not_in_flash_func(operator+)(float lhs, const fixed& rhs);
 fixed __not_in_flash_func(operator+)(int lhs, const fixed& rhs);
+fixed __not_in_flash_func(operator+)(unsigned lhs, const fixed& rhs);
 
 fixed __not_in_flash_func(operator-)(double lhs, const fixed& rhs);
 fixed __not_in_flash_func(operator-)(float lhs, const fixed& rhs);
 fixed __not_in_flash_func(operator-)(int lhs, const fixed& rhs);
+fixed __not_in_flash_func(operator-)(unsigned lhs, const fixed& rhs);
 
 
 void __not_in_flash_func(operator*=)(double &lhs, const fixed& rhs);
 void __not_in_flash_func(operator*=)(float &lhs, const fixed& rhs);
 void __not_in_flash_func(operator*=)(int &lhs, const fixed& rhs);
+void __not_in_flash_func(operator*=)(unsigned &lhs, const fixed& rhs);
 
 void __not_in_flash_func(operator/=)(double &lhs, const fixed& rhs);
 void __not_in_flash_func(operator/=)(float &lhs, const fixed& rhs);
 void __not_in_flash_func(operator/=)(int &lhs, const fixed& rhs);
+void __not_in_flash_func(operator/=)(unsigned &lhs, const fixed& rhs);
 
 void __not_in_flash_func(operator+=)(double &lhs, const fixed& rhs);
 void __not_in_flash_func(operator+=)(float &lhs, const fixed& rhs);
 void __not_in_flash_func(operator+=)(int &lhs, const fixed& rhs);
+void __not_in_flash_func(operator+=)(unsigned &lhs, const fixed& rhs);
 
 void __not_in_flash_func(operator-=)(double &lhs, const fixed& rhs);
 void __not_in_flash_func(operator-=)(float &lhs, const fixed& rhs);
 void __not_in_flash_func(operator-=)(int &lhs, const fixed& rhs);
+void __not_in_flash_func(operator-=)(unsigned &lhs, const fixed& rhs);
 
 #include "MyFixedPoint.hpp"
 
