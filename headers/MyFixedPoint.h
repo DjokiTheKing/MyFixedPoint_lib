@@ -89,6 +89,10 @@ class fixed{
         bool __not_in_flash_func(operator<=)(const float& other) const;
         bool __not_in_flash_func(operator<=)(const int& other) const;
 
+        fixed __not_in_flash_func(operator%)(const fixed& other) const;
+        fixed __not_in_flash_func(operator%)(const float& other) const;
+        fixed __not_in_flash_func(operator%)(const int& other) const;
+
         fixed& operator++();
         fixed& operator--();
         fixed operator++(int);

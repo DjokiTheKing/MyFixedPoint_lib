@@ -337,6 +337,29 @@ inline bool fixed::operator<=(const int &other) const
     return value <= (other<<FRAC_BITS);
 }
 
+inline fixed fixed::operator%(const fixed &other) const
+{
+    fixed res; res.value = value%other.value;
+    return res;
+}
+
+inline fixed fixed::operator%(const float &other) const
+{
+#ifdef PICO_RP2040
+    fixed res; res.value = value%float2fix(other, FRAC_BITS);
+    return res;
+#else
+    fixed res; res.value = value%int32_t(other * float(1L<<FRAC_BITS)+(other>=0?0.5f:-0.5f));
+    return res;
+#endif
+}
+
+inline fixed fixed::operator%(const int &other) const
+{
+    fixed res; res.value = value%(other<<FRAC_BITS);
+    return res;
+}
+
 inline fixed& fixed::operator++(){
     ++value;
     return *this;
