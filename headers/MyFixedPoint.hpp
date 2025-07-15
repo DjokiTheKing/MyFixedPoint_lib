@@ -3,6 +3,15 @@
 
 #include "MyFixedPoint.h"
 
+fixed::fixed(double val)
+{
+#ifdef PICO_RP2040
+    value = float2fix(float(val), FRAC_BITS);
+#else
+    value = int32_t(float(val) * float(1L<<FRAC_BITS)+(val>=0?0.5f:-0.5f));
+#endif
+}
+
 fixed::fixed(float val)
 {
 #ifdef PICO_RP2040
@@ -43,6 +52,58 @@ inline fixed fixed::operator/(const fixed &other) const
     fixed res;
     res.value = int32_t((int64_t(value)<<FRAC_BITS)/int64_t(other.value));
     return res;
+}
+
+inline fixed fixed::operator+(const double &other) const
+{
+#ifdef PICO_RP2040
+    fixed res;
+    res.value = value+float2fix(float(other), FRAC_BITS);
+    return res;
+#else
+    fixed res;
+    res.value = value+int32_t(float(other) * float(1L<<FRAC_BITS)+(float(other)>=0?0.5f:-0.5f));
+    return res;
+#endif
+}
+
+inline fixed fixed::operator-(const double &other) const
+{
+#ifdef PICO_RP2040
+    fixed res;
+    res.value = value-float2fix(float(other), FRAC_BITS);
+    return res;
+#else
+    fixed res;
+    res.value = value-int32_t(float(other) * float(1L<<FRAC_BITS)+(float(other)>=0?0.5f:-0.5f));
+    return res;
+#endif
+}
+
+inline fixed fixed::operator*(const double &other) const
+{
+#ifdef PICO_RP2040
+    fixed res;
+    res.value = int32_t((int64_t(value)*int64_t(float2fix(float(other), FRAC_BITS))+(1LL << (FRAC_BITS - 1))) >> FRAC_BITS);
+    return res;
+#else
+    fixed res;
+    res.value = int32_t((int64_t(value)*int64_t(float(other) * float(1L<<FRAC_BITS)+(float(other)>=0?0.5f:-0.5f))+(1LL << (FRAC_BITS - 1))) >> FRAC_BITS);
+    return res;
+#endif
+}
+
+inline fixed fixed::operator/(const double &other) const
+{
+#ifdef PICO_RP2040
+    fixed res;
+    res.value = int32_t((int64_t(value)<<FRAC_BITS)/int64_t(float2fix(float(other), FRAC_BITS)));
+    return res;
+#else
+    fixed res;
+    res.value = int32_t((int64_t(value)<<FRAC_BITS)/int64_t(float(other) * float(1L<<FRAC_BITS)+(float(other)>=0?0.5f:-0.5f)));
+    return res;
+#endif
 }
 
 inline fixed fixed::operator+(const float &other) const
@@ -149,6 +210,52 @@ inline fixed &fixed::operator/=(const fixed &other)
     return *this;
 }
 
+inline fixed &fixed::operator+=(const double &other)
+{
+#ifdef PICO_RP2040
+    value += float2fix(float(other), FRAC_BITS);
+    return *this;
+#else
+    value += int32_t(float(other) * float(1L<<FRAC_BITS)+(float(other)>=0?0.5f:-0.5f));
+    return *this;
+#endif
+}
+
+inline fixed &fixed::operator-=(const double &other)
+{
+#ifdef PICO_RP2040
+    value -= float2fix(float(other), FRAC_BITS);
+    return *this;
+#else
+    value -= int32_t(float(other) * float(1L<<FRAC_BITS)+(float(other)>=0?0.5f:-0.5f));
+    return *this;
+#endif
+}
+
+inline fixed &fixed::operator*=(const double &other)
+{
+#ifdef PICO_RP2040
+    value = int32_t((int64_t(value)*float2fix64(float(other), FRAC_BITS)+(1LL << (FRAC_BITS - 1)))>>FRAC_BITS);
+    return *this;
+#else
+    value = int32_t((int64_t(value)*int64_t(float(other) * float(1L<<FRAC_BITS)+(float(other)>=0?0.5f:-0.5f))+(1LL << (FRAC_BITS - 1)))>>FRAC_BITS);
+    return *this;
+#endif
+}
+
+inline fixed &fixed::operator/=(const double &other)
+{
+#ifdef PICO_RP2040
+    value = int32_t((int64_t(value)<<FRAC_BITS)/float2fix64(float(other), FRAC_BITS));
+    return *this;
+#else
+    value = int32_t((int64_t(value)<<FRAC_BITS)/int64_t(float(other) * float(1L<<FRAC_BITS)+(float(other)>=0?0.5f:-0.5f)));
+    return *this;
+#endif
+    
+    return *this;
+}
+
 inline fixed &fixed::operator+=(const float &other)
 {
 #ifdef PICO_RP2040
@@ -225,6 +332,17 @@ inline fixed &fixed::operator=(const fixed &other)
     return *this;
 }
 
+inline fixed &fixed::operator=(const double &other)
+{
+#ifdef PICO_RP2040
+    value = float2fix(float(other), FRAC_BITS);
+    return *this;
+#else
+    value = int32_t(float(other) * float(1L<<FRAC_BITS)+(other>=0?0.5f:-0.5f));
+    return *this;
+#endif
+}
+
 inline fixed &fixed::operator=(const float &other)
 {
 #ifdef PICO_RP2040
@@ -247,6 +365,15 @@ inline bool fixed::operator> (const fixed &other) const
     return value > other.value;
 }
 
+inline bool fixed::operator> (const double &other) const
+{
+#ifdef PICO_RP2040
+    return value > float2fix(float(other), FRAC_BITS);
+#else
+    return value > int32_t(float(other) * float(1L<<FRAC_BITS)+(float(other)>=0?0.5f:-0.5f));
+#endif
+}
+
 inline bool fixed::operator> (const float &other) const
 {
 #ifdef PICO_RP2040
@@ -264,6 +391,15 @@ inline bool fixed::operator> (const int &other) const
 inline bool fixed::operator<(const fixed &other) const
 {
     return value < other.value;
+}
+
+inline bool fixed::operator<(const double &other) const
+{
+#ifdef PICO_RP2040
+    return value < float2fix(float(other), FRAC_BITS);
+#else
+    return value < int32_t(float(other) * float(1L<<FRAC_BITS)+(float(other)>=0?0.5f:-0.5f));
+#endif
 }
 
 inline bool fixed::operator<(const float &other) const
@@ -285,6 +421,15 @@ inline bool fixed::operator==(const fixed &other) const
     return value == other.value;
 }
 
+inline bool fixed::operator==(const double &other) const
+{
+#ifdef PICO_RP2040
+    return value == float2fix(float(other), FRAC_BITS);
+#else
+    return value == int32_t(float(other) * float(1L<<FRAC_BITS)+(float(other)>=0?0.5f:-0.5f));
+#endif
+}
+
 inline bool fixed::operator==(const float &other) const
 {
 #ifdef PICO_RP2040
@@ -302,6 +447,15 @@ inline bool fixed::operator==(const int &other) const
 inline bool fixed::operator>=(const fixed &other) const
 {
     return value >= other.value;
+}
+
+inline bool fixed::operator>=(const double &other) const
+{
+#ifdef PICO_RP2040
+    return value >= float2fix(float(other), FRAC_BITS);
+#else
+    return value >= int32_t(float(other) * float(1L<<FRAC_BITS)+(float(other)>=0?0.5f:-0.5f));
+#endif
 }
 
 inline bool fixed::operator>=(const float &other) const
@@ -323,6 +477,15 @@ inline bool fixed::operator<=(const fixed &other) const
     return value <= other.value;
 }
 
+inline bool fixed::operator<=(const double &other) const
+{
+#ifdef PICO_RP2040
+    return value <= float2fix(float(other), FRAC_BITS);
+#else
+    return value <= int32_t(float(other) * float(1L<<FRAC_BITS)+(float(other)>=0?0.5f:-0.5f));
+#endif
+}
+
 inline bool fixed::operator<=(const float &other) const
 {
 #ifdef PICO_RP2040
@@ -341,6 +504,17 @@ inline fixed fixed::operator%(const fixed &other) const
 {
     fixed res; res.value = value%other.value;
     return res;
+}
+
+inline fixed fixed::operator%(const double &other) const
+{
+#ifdef PICO_RP2040
+    fixed res; res.value = value%float2fix(float(other), FRAC_BITS);
+    return res;
+#else
+    fixed res; res.value = value%int32_t(float(other) * float(1L<<FRAC_BITS)+(float(other)>=0?0.5f:-0.5f));
+    return res;
+#endif
 }
 
 inline fixed fixed::operator%(const float &other) const

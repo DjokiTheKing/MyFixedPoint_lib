@@ -32,64 +32,95 @@ static inline int __builtin_clz(uint32_t num) {
 class fixed{
     public:
         fixed() = default;
+        fixed(double);
         fixed(float);
         fixed(int);
+        // BASIC OPS
 
+        // FIXED
         fixed __not_in_flash_func(operator+)(const fixed& other) const;
         fixed __not_in_flash_func(operator-)(const fixed& other) const;
         fixed __not_in_flash_func(operator*)(const fixed& other) const;
         fixed __not_in_flash_func(operator/)(const fixed& other) const;
 
+        // DOUBLE
+        fixed __not_in_flash_func(operator+)(const double& other) const;
+        fixed __not_in_flash_func(operator-)(const double& other) const;
+        fixed __not_in_flash_func(operator*)(const double& other) const;
+        fixed __not_in_flash_func(operator/)(const double& other) const;
+
+        // FLOAT
         fixed __not_in_flash_func(operator+)(const float& other) const;
         fixed __not_in_flash_func(operator-)(const float& other) const;
         fixed __not_in_flash_func(operator*)(const float& other) const;
         fixed __not_in_flash_func(operator/)(const float& other) const;
 
+        // INT
         fixed __not_in_flash_func(operator+)(const int& other) const;
         fixed __not_in_flash_func(operator-)(const int& other) const;
         fixed __not_in_flash_func(operator*)(const int& other) const;
         fixed __not_in_flash_func(operator/)(const int& other) const;
 
+        // BASIC + ASSIGN OPS
+
+        // FIXED
         fixed& __not_in_flash_func(operator+=)(const fixed& other);
         fixed& __not_in_flash_func(operator-=)(const fixed& other);
         fixed& __not_in_flash_func(operator*=)(const fixed& other);
         fixed& __not_in_flash_func(operator/=)(const fixed& other);
 
+        // DOUBLE
+        fixed& __not_in_flash_func(operator+=)(const double& other);
+        fixed& __not_in_flash_func(operator-=)(const double& other);
+        fixed& __not_in_flash_func(operator*=)(const double& other);
+        fixed& __not_in_flash_func(operator/=)(const double& other);
+
+        // FLOAT
         fixed& __not_in_flash_func(operator+=)(const float& other);
         fixed& __not_in_flash_func(operator-=)(const float& other);
         fixed& __not_in_flash_func(operator*=)(const float& other);
         fixed& __not_in_flash_func(operator/=)(const float& other);
 
+        // INT
         fixed& __not_in_flash_func(operator+=)(const int& other);
         fixed& __not_in_flash_func(operator-=)(const int& other);
         fixed& __not_in_flash_func(operator*=)(const int& other);
         fixed& __not_in_flash_func(operator/=)(const int& other);
 
+        // ASSIGNMENT OPS
         fixed& __not_in_flash_func(operator=)(const fixed& other);
+        fixed& __not_in_flash_func(operator=)(const double& other);
         fixed& __not_in_flash_func(operator=)(const float& other);
         fixed& __not_in_flash_func(operator=)(const int& other);
 
+        // COMPARISON OPS
         bool __not_in_flash_func(operator>)(const fixed& other) const;
+        bool __not_in_flash_func(operator>)(const double& other) const;
         bool __not_in_flash_func(operator>)(const float& other) const;
         bool __not_in_flash_func(operator>)(const int& other) const;
 
         bool __not_in_flash_func(operator<)(const fixed& other) const;
+        bool __not_in_flash_func(operator<)(const double& other) const;
         bool __not_in_flash_func(operator<)(const float& other) const;
         bool __not_in_flash_func(operator<)(const int& other) const;
 
         bool __not_in_flash_func(operator==)(const fixed& other) const;
+        bool __not_in_flash_func(operator==)(const double& other) const;
         bool __not_in_flash_func(operator==)(const float& other) const;
         bool __not_in_flash_func(operator==)(const int& other) const;
 
         bool __not_in_flash_func(operator>=)(const fixed& other) const;
+        bool __not_in_flash_func(operator>=)(const double& other) const;
         bool __not_in_flash_func(operator>=)(const float& other) const;
         bool __not_in_flash_func(operator>=)(const int& other) const;
 
         bool __not_in_flash_func(operator<=)(const fixed& other) const;
+        bool __not_in_flash_func(operator<=)(const double& other) const;
         bool __not_in_flash_func(operator<=)(const float& other) const;
         bool __not_in_flash_func(operator<=)(const int& other) const;
 
         fixed __not_in_flash_func(operator%)(const fixed& other) const;
+        fixed __not_in_flash_func(operator%)(const double& other) const;
         fixed __not_in_flash_func(operator%)(const float& other) const;
         fixed __not_in_flash_func(operator%)(const int& other) const;
 
