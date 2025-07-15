@@ -26,6 +26,11 @@ inline fixed::fixed(int val)
     value = val << FRAC_BITS;
 }
 
+inline fixed::fixed(unsigned val)
+{
+    value = int32_t(val) << FRAC_BITS;
+}
+
 inline fixed fixed::operator+(const fixed &other) const
 {
     fixed res;

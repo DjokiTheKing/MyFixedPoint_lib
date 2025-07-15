@@ -40,6 +40,7 @@ class fixed{
         fixed(double);
         fixed(float);
         fixed(int);
+        fixed(unsigned);
         // BASIC OPS
 
         // FIXED
