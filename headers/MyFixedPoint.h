@@ -131,6 +131,7 @@ class fixed{
 
         fixed operator-() const;
 
+        operator double() const;
         operator float() const;
         operator int() const;
         operator short() const;

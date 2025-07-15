@@ -558,6 +558,15 @@ inline fixed fixed::operator-() const{
     return res;
 }
 
+inline fixed::operator double() const
+{
+#ifdef PICO_RP2040
+    return double(fix2float(value, FRAC_BITS));
+#else
+    return double(value)/double(1L<<FRAC_BITS);
+#endif
+}
+
 inline fixed::operator float() const
 {
 #ifdef PICO_RP2040
