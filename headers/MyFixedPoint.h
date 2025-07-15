@@ -176,38 +176,38 @@ class fixed{
         static const uint16_t __not_in_flash("log_pow2_lookup") log_pow2_lookup[18];
 };
 
-inline fixed __not_in_flash_func(operator*)(double lhs, const fixed& rhs);
-inline fixed __not_in_flash_func(operator*)(float lhs, const fixed& rhs);
-inline fixed __not_in_flash_func(operator*)(int lhs, const fixed& rhs);
+fixed __not_in_flash_func(operator*)(double lhs, const fixed& rhs);
+fixed __not_in_flash_func(operator*)(float lhs, const fixed& rhs);
+fixed __not_in_flash_func(operator*)(int lhs, const fixed& rhs);
 
-inline fixed __not_in_flash_func(operator/)(double lhs, const fixed& rhs);
-inline fixed __not_in_flash_func(operator/)(float lhs, const fixed& rhs);
-inline fixed __not_in_flash_func(operator/)(int lhs, const fixed& rhs);
+fixed __not_in_flash_func(operator/)(double lhs, const fixed& rhs);
+fixed __not_in_flash_func(operator/)(float lhs, const fixed& rhs);
+fixed __not_in_flash_func(operator/)(int lhs, const fixed& rhs);
 
-inline fixed __not_in_flash_func(operator+)(double lhs, const fixed& rhs);
-inline fixed __not_in_flash_func(operator+)(float lhs, const fixed& rhs);
-inline fixed __not_in_flash_func(operator+)(int lhs, const fixed& rhs);
+fixed __not_in_flash_func(operator+)(double lhs, const fixed& rhs);
+fixed __not_in_flash_func(operator+)(float lhs, const fixed& rhs);
+fixed __not_in_flash_func(operator+)(int lhs, const fixed& rhs);
 
-inline fixed __not_in_flash_func(operator-)(double lhs, const fixed& rhs);
-inline fixed __not_in_flash_func(operator-)(float lhs, const fixed& rhs);
-inline fixed __not_in_flash_func(operator-)(int lhs, const fixed& rhs);
+fixed __not_in_flash_func(operator-)(double lhs, const fixed& rhs);
+fixed __not_in_flash_func(operator-)(float lhs, const fixed& rhs);
+fixed __not_in_flash_func(operator-)(int lhs, const fixed& rhs);
 
 
-inline void __not_in_flash_func(operator*=)(double &lhs, const fixed& rhs);
-inline void __not_in_flash_func(operator*=)(float &lhs, const fixed& rhs);
-inline void __not_in_flash_func(operator*=)(int &lhs, const fixed& rhs);
+void __not_in_flash_func(operator*=)(double &lhs, const fixed& rhs);
+void __not_in_flash_func(operator*=)(float &lhs, const fixed& rhs);
+void __not_in_flash_func(operator*=)(int &lhs, const fixed& rhs);
 
-inline void __not_in_flash_func(operator/=)(double &lhs, const fixed& rhs);
-inline void __not_in_flash_func(operator/=)(float &lhs, const fixed& rhs);
-inline void __not_in_flash_func(operator/=)(int &lhs, const fixed& rhs);
+void __not_in_flash_func(operator/=)(double &lhs, const fixed& rhs);
+void __not_in_flash_func(operator/=)(float &lhs, const fixed& rhs);
+void __not_in_flash_func(operator/=)(int &lhs, const fixed& rhs);
 
-inline void __not_in_flash_func(operator+=)(double &lhs, const fixed& rhs);
-inline void __not_in_flash_func(operator+=)(float &lhs, const fixed& rhs);
-inline void __not_in_flash_func(operator+=)(int &lhs, const fixed& rhs);
+void __not_in_flash_func(operator+=)(double &lhs, const fixed& rhs);
+void __not_in_flash_func(operator+=)(float &lhs, const fixed& rhs);
+void __not_in_flash_func(operator+=)(int &lhs, const fixed& rhs);
 
-inline void __not_in_flash_func(operator-=)(double &lhs, const fixed& rhs);
-inline void __not_in_flash_func(operator-=)(float &lhs, const fixed& rhs);
-inline void __not_in_flash_func(operator-=)(int &lhs, const fixed& rhs);
+void __not_in_flash_func(operator-=)(double &lhs, const fixed& rhs);
+void __not_in_flash_func(operator-=)(float &lhs, const fixed& rhs);
+void __not_in_flash_func(operator-=)(int &lhs, const fixed& rhs);
 
 #include "MyFixedPoint.hpp"
 
