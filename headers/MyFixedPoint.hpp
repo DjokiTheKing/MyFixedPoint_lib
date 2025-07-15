@@ -10691,4 +10691,84 @@ const uint16_t __not_in_flash("log_pow2_lookup") fixed::log_pow2_lookup[18] = {
     22713
 };
 
+inline fixed __not_in_flash_func(operator*)(double lhs, const fixed& rhs){
+    return rhs * lhs;
+}
+inline fixed __not_in_flash_func(operator*)(float lhs, const fixed& rhs){
+    return rhs * lhs;
+}
+inline fixed __not_in_flash_func(operator*)(int lhs, const fixed& rhs){
+    return rhs * lhs;
+}
+
+inline fixed __not_in_flash_func(operator/)(double lhs, const fixed& rhs){
+    return fixed(lhs)/rhs;
+}
+inline fixed __not_in_flash_func(operator/)(float lhs, const fixed& rhs){
+    return fixed(lhs)/float(rhs);
+}
+inline fixed __not_in_flash_func(operator/)(int lhs, const fixed& rhs){
+    return fixed(lhs)/int(rhs);
+}
+
+inline fixed __not_in_flash_func(operator+)(double lhs, const fixed& rhs){
+    return rhs+lhs;
+}
+inline fixed __not_in_flash_func(operator+)(float lhs, const fixed& rhs){
+    return rhs+lhs;
+}
+inline fixed __not_in_flash_func(operator+)(int lhs, const fixed& rhs){
+    return rhs+lhs;
+}
+
+inline fixed __not_in_flash_func(operator-)(double lhs, const fixed& rhs){
+    return fixed(lhs)-rhs;
+}
+inline fixed __not_in_flash_func(operator-)(float lhs, const fixed& rhs){
+    return fixed(lhs)-rhs;
+}
+inline fixed __not_in_flash_func(operator-)(int lhs, const fixed& rhs){
+    return fixed(lhs)-rhs;
+}
+
+inline void __not_in_flash_func(operator*=)(double &lhs, const fixed& rhs){
+    lhs *= double(rhs);
+}
+inline void __not_in_flash_func(operator*=)(float &lhs, const fixed& rhs){
+    lhs *= float(rhs);
+}
+inline void __not_in_flash_func(operator*=)(int &lhs, const fixed& rhs){
+    lhs = int(rhs*lhs);
+}
+
+inline void __not_in_flash_func(operator/=)(double &lhs, const fixed& rhs){
+    lhs /= double(rhs);
+}
+inline void __not_in_flash_func(operator/=)(float &lhs, const fixed& rhs){
+    lhs /= float(rhs);
+}
+inline void __not_in_flash_func(operator/=)(int &lhs, const fixed& rhs){
+    lhs = int(fixed(lhs)/rhs);
+}
+
+inline void __not_in_flash_func(operator+=)(double &lhs, const fixed& rhs){
+    lhs += double(rhs);
+}
+inline void __not_in_flash_func(operator+=)(float &lhs, const fixed& rhs){
+    lhs += float(rhs);
+}
+inline void __not_in_flash_func(operator+=)(int &lhs, const fixed& rhs){
+    lhs += int(rhs);
+}
+
+inline void __not_in_flash_func(operator-=)(double &lhs, const fixed& rhs){
+    lhs -= double(rhs);
+}
+inline void __not_in_flash_func(operator-=)(float &lhs, const fixed& rhs){
+    lhs -= float(rhs);
+}
+inline void __not_in_flash_func(operator-=)(int &lhs, const fixed& rhs){
+    lhs -= int(rhs);
+}
+
 #endif // MY_FIXED_POINT_IMPL_H
