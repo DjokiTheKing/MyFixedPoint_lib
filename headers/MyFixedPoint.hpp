@@ -3,7 +3,7 @@
 
 #include "MyFixedPoint.h"
 
-fixed::fixed(double val)
+inline fixed::fixed(double val)
 {
 #ifdef PICO_RP2040
     value = float2fix(float(val), FRAC_BITS);
@@ -12,7 +12,7 @@ fixed::fixed(double val)
 #endif
 }
 
-fixed::fixed(float val)
+inline fixed::fixed(float val)
 {
 #ifdef PICO_RP2040
     value = float2fix(val, FRAC_BITS);
@@ -817,9 +817,9 @@ inline  fixed __not_in_flash_func(fixed::sqrt_fast)(const fixed &  num)
     return res;
 }
 #endif
-const fixed fixed::PI =      3.14159265359f;
-const fixed fixed::HALF_PI = 1.57079632679f;
-const fixed fixed::TWO_PI =  6.28318530717f;
+inline const fixed fixed::PI =      3.14159265359f;
+inline const fixed fixed::HALF_PI = 1.57079632679f;
+inline const fixed fixed::TWO_PI =  6.28318530717f;
 
 inline fixed fixed::sin(const fixed &num)
 {
@@ -890,7 +890,7 @@ inline fixed fixed::from_raw_fixed(const int32_t &num)
 
 
 #ifdef SQRT_BIG_LUT
-const uint16_t __not_in_flash("sqrt_lookup") fixed::sqrt_lookup[8193] = {
+inline const uint16_t __not_in_flash("sqrt_lookup") fixed::sqrt_lookup[8193] = {
     0,
 724,
 1024,
@@ -9086,7 +9086,7 @@ const uint16_t __not_in_flash("sqrt_lookup") fixed::sqrt_lookup[8193] = {
     65535
 };
 #else
-const uint16_t __not_in_flash("sqrt_lookup") fixed::sqrt_lookup[257] = {
+inline const uint16_t __not_in_flash("sqrt_lookup") fixed::sqrt_lookup[257] = {
     0,
     4096,
     5792,
@@ -9346,7 +9346,7 @@ const uint16_t __not_in_flash("sqrt_lookup") fixed::sqrt_lookup[257] = {
     65535
 };
 #endif
-const uint16_t __not_in_flash("sin_cos_lookup") fixed::sin_cos_lookup[806] = {
+inline const uint16_t __not_in_flash("sin_cos_lookup") fixed::sin_cos_lookup[806] = {
     32768,
     32767,
     32767,
@@ -10155,7 +10155,7 @@ const uint16_t __not_in_flash("sin_cos_lookup") fixed::sin_cos_lookup[806] = {
     0
 };
 
-const uint16_t __not_in_flash("log_base_lookup") fixed::log_base_lookup[513] = {
+inline const uint16_t __not_in_flash("log_base_lookup") fixed::log_base_lookup[513] = {
     56782,
     51104,
     45426,
@@ -10671,7 +10671,7 @@ const uint16_t __not_in_flash("log_base_lookup") fixed::log_base_lookup[513] = {
     0
 };
 
-const uint16_t __not_in_flash("log_pow2_lookup") fixed::log_pow2_lookup[18] = {
+inline const uint16_t __not_in_flash("log_pow2_lookup") fixed::log_pow2_lookup[18] = {
     0,
     1419,
     2839,
